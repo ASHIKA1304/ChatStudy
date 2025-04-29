@@ -44,20 +44,25 @@ Client-server chat applications are software systems that enable real-time commu
 ## Client-Server Model:
 Client-server chat applications typically follow the client-server model, where one entity acts as the server, managing connections and facilitating communication, and one or more entities act as clients, initiating communication with the server.
 
-```import socket 
-s=socket.socket() 
-s.bind(('localhost',6000)) 
-s.listen(5) 
-print("server is listening on port 6000,,,")
+```
+import socket
+s=socket.socket()
+s.bind(('localhost',8000))
+s.listen(5)
 c,addr=s.accept()
-print("Conection establishment with:",addr) 
-address={"165.165.80.80":"6A:08:AA:C2","165.165.79.1":"8A:BC:E3:FA"}; 
-while True: 
-    ip=c.recv(1024).decode() 
-    try: 
-        c.send(address[ip].encode()) 
-    except KeyError: 
-        c.send("Not Found".encode())
+size=int(input("Enter number of frames to send : "))
+l=list(range(size))
+s=int(input("Enter Window Size : "))
+st=0
+i=0
+while True:
+    while(i<len(l)):
+        st+=s
+        c.send(str(l[i:st]).encode())
+        ack=c.recv(1024).decode()
+        if ack:
+            print(ack)
+            i+=s
 ```
 
 ## Communication Protocols:
@@ -72,12 +77,12 @@ User authentication mechanisms are essential to ensure secure and authorized acc
 •	Message Routing: Implementing logic to route messages from one client to another, ensuring proper delivery.
 
 ```
-import socket 
-s=socket.socket() 
-s.connect(('localhost',6000)) 
-print(s.getsockname()) 
-print(s.recv(1024).decode()) 
-s.send("acknowledgement recived from the server".encode())
+import socket
+s=socket.socket()
+s.connect(('localhost',8000))
+while True: 
+    print(s.recv(1024).decode())
+    s.send("acknowledgement recived from the server".encode())
 ```
 
 ## Considerations in Development:
@@ -98,7 +103,12 @@ Client-server chat applications are versatile tools that facilitate real-time co
 
 Client-server chat applications are foundational to real-time communication over networks. They incorporate principles of socket programming, communication protocols, and security mechanisms to provide a seamless user experience. Understanding the basics of client-server chat applications is essential for developers involved in networked application development, as they form the backbone of various collaborative communication systems. As technology evolves, chat applications continue to adapt, incorporating new features and technologies to enhance user interaction and connectivity.
 ## OUTPUT:
-![Screenshot 2025-04-17 050516](https://github.com/user-attachments/assets/a4093f85-fb8e-4060-a13c-72db9aebd637)
+
+## Client:
+![image](https://github.com/user-attachments/assets/476f123b-13c1-4012-82eb-40b4159205ef)
+
+## Server:
+![image](https://github.com/user-attachments/assets/1a6e8059-be2d-44a7-ac01-ff7ab61f50da)
 
 ## Result:
 
