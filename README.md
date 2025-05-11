@@ -46,23 +46,18 @@ Client-server chat applications typically follow the client-server model, where 
 
 ```
 import socket
+from datetime import datetime
 s=socket.socket()
 s.bind(('localhost',8000))
 s.listen(5)
 c,addr=s.accept()
-size=int(input("Enter number of frames to send : "))
-l=list(range(size))
-s=int(input("Enter Window Size : "))
-st=0
-i=0
-while True:
-    while(i<len(l)):
-        st+=s
-        c.send(str(l[i:st]).encode())
-        ack=c.recv(1024).decode()
-        if ack:
-            print(ack)
-            i+=s
+print("Client Address : ",addr)
+now = datetime.now()
+c.send(now.strftime("%d/%m/%Y %H:%M:%S").encode())
+ack=c.recv(1024).decode()
+if ack:
+ print(ack)
+c.close()
 ```
 
 ## Communication Protocols:
@@ -80,9 +75,9 @@ User authentication mechanisms are essential to ensure secure and authorized acc
 import socket
 s=socket.socket()
 s.connect(('localhost',8000))
-while True: 
-    print(s.recv(1024).decode())
-    s.send("acknowledgement recived from the server".encode())
+print(s.getsockname())
+print(s.recv(1024).decode())
+s.send("acknowledgement recived from the server".encode())
 ```
 
 ## Considerations in Development:
@@ -105,10 +100,10 @@ Client-server chat applications are foundational to real-time communication over
 ## OUTPUT:
 
 ## Client:
-![image](https://github.com/user-attachments/assets/476f123b-13c1-4012-82eb-40b4159205ef)
+![Screenshot 2025-05-11 082940](https://github.com/user-attachments/assets/b9e0006a-c41d-4fdf-9d43-d97fb3b69690)
 
 ## Server:
-![image](https://github.com/user-attachments/assets/1a6e8059-be2d-44a7-ac01-ff7ab61f50da)
+![Screenshot 2025-05-11 082956](https://github.com/user-attachments/assets/3fba7100-4372-4604-8325-35861e0d4f37)
 
 ## Result:
 
